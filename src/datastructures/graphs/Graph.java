@@ -1,6 +1,9 @@
 package datastructures.graphs;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Generic Graph implementation by using adjacency list representation
@@ -112,6 +115,9 @@ public class Graph<T extends Comparable<T>> {
             throw new IllegalArgumentException("Either one or both of the specified nodes are not present in the graph");
 
 
+        if (adjacency(source, destination))
+            throw new IllegalArgumentException("Edge exists already");
+
         Edge edge1 = new Edge(source, destination, weight);
         this.graph.get(source).add(edge1);
 
@@ -206,6 +212,7 @@ public class Graph<T extends Comparable<T>> {
 
     public static void main(String[] args) {
         Graph<Integer> graph = new Graph<>(true);
+        System.out.println(graph.isUndirected());
 
         graph.addVertex(1);
         graph.addVertex(2);
@@ -236,7 +243,7 @@ public class Graph<T extends Comparable<T>> {
 
         System.out.println(graph.getNumberOfVertices() + ", " + graph.getNumberOfEdges());
 
-        System.out.println(graph.adjacency(2,3));
+        System.out.println(graph.adjacency(2, 3));
 
         System.out.println(graph.neighbours(3).toString());
     }
