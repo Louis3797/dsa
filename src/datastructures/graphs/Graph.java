@@ -42,6 +42,17 @@ public class Graph<T extends Comparable<T>> {
             this.weight = weight;
         }
 
+        public T getSource() {
+            return source;
+        }
+
+        public T getDestination() {
+            return destination;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
     }
 
     /**
@@ -69,13 +80,8 @@ public class Graph<T extends Comparable<T>> {
     }
 
     public void addVertex(T vertex) {
-
-        // check if vertex is already present in graph
-        if (this.graph.containsKey(vertex))
-            throw new IllegalArgumentException("Vertex already exists");
-
         // add vertex
-        this.graph.put(vertex, new LinkedList<>());
+        this.graph.putIfAbsent(vertex, new LinkedList<>());
         this.numberOfVertices++;
     }
 
@@ -149,6 +155,21 @@ public class Graph<T extends Comparable<T>> {
         numberOfEdges -= this.undirected ? 2 : 1;
     }
 
+    public Edge getEdge(T source, T destination) {
+
+        // If graph does not contain Vertex, throw an error
+        if (!this.graph.containsKey(source) || !this.graph.containsKey(destination))
+            throw new IllegalArgumentException("Either one or both of the specified nodes are not present in the graph");
+
+        for (Edge e : graph.get(source)) {
+
+            if (e.destination.equals(destination))
+                return e;
+        }
+
+        return null;
+    }
+
     public boolean adjacency(T source, T destination) {
 
         if (!this.graph.containsKey(source) || !this.graph.containsKey(destination))
@@ -197,6 +218,10 @@ public class Graph<T extends Comparable<T>> {
     }
 
     /* Getter Methods */
+
+    public HashMap<T, List<Edge>> getGraph() {
+        return graph;
+    }
 
     public boolean isUndirected() {
         return undirected;
