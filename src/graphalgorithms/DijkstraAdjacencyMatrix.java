@@ -35,9 +35,7 @@ public class DijkstraAdjacencyMatrix {
 
 
         // initialize all distances with infinity = Integer.Max_Value
-        for (int i = 0; i < numberOfVertices; i++) {
-            distance[i] = Integer.MAX_VALUE;
-        }
+        Arrays.fill(distance, Integer.MAX_VALUE);
 
         // set start Vertex distance to 0, bc we start from this vertex so
         distance[startVertex] = 0;
@@ -60,7 +58,7 @@ public class DijkstraAdjacencyMatrix {
 
                         if (newDistance < distance[j])
                             distance[j] = distance[vertex] + graph[vertex][j];
-                            prev[j] = vertex;
+                        prev[j] = vertex;
                     }
                 }
 
