@@ -152,6 +152,10 @@ public class AdjacencyMatrix {
         }
     }
 
+    public int size() {
+        return this.graph.length;
+    }
+
     /* Getter and Setter Methods */
 
     public int getNumOfEdges() {
