@@ -56,9 +56,10 @@ public class DijkstraAdjacencyMatrix {
 
                         int newDistance = distance[vertex] + graph[vertex][j];
 
-                        if (newDistance < distance[j])
-                            distance[j] = distance[vertex] + graph[vertex][j];
-                        prev[j] = vertex;
+                        if (newDistance < distance[j]) {
+                            distance[j] = newDistance;
+                            prev[j] = vertex;
+                        }
                     }
                 }
 
@@ -86,7 +87,7 @@ public class DijkstraAdjacencyMatrix {
         graph.addEdge(0, 2, 10);
         graph.addEdge(0, 3, 5);
         graph.addEdge(0, 4, 8);
-        graph.addEdge(1, 2, 8);
+        graph.addEdge(1, 2, 3);
         graph.addEdge(1, 4, 16);
         graph.addEdge(1, 5, 6);
         graph.addEdge(1, 6, 15);
@@ -97,7 +98,6 @@ public class DijkstraAdjacencyMatrix {
         graph.addEdge(5, 6, 20);
         graph.addEdge(5, 7, 4);
         graph.addEdge(6, 7, 8);
-
         graph.print();
 
         System.out.println();

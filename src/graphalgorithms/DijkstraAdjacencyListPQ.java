@@ -1,40 +1,26 @@
 package graphalgorithms;
 
-import datastructures.graphs.AdjacencyMatrix;
+import datastructures.graphs.Graph;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class DijkstraAdjacencyMatrixPQ {
+/**
+ * Implementation only works with Integer Vertexes
+ */
+public class DijkstraAdjacencyListPQ {
 
-    private int getMinDistance(int[] distance, boolean[] shortestPathTree) {
-
-        // to store smallest distance
-        int minimum = Integer.MAX_VALUE;
-
-        // index of the vertex
-        int vertex = -1;
-
-        for (int i = 0; i < distance.length; i++) {
-            if (!shortestPathTree[i] && distance[i] <= minimum) {
-                minimum = distance[i];
-                vertex = i;
-            }
-        }
-
-        return vertex;
-    }
-
-    public void dijkstra(AdjacencyMatrix graph, int startVertex) {
+    public void dijkstra(Graph<Integer> graph, int startVertex) {
 
         // store the number of vetices in Graph
-        int numberOfVertices = graph.getGraph().length;
+        int numberOfVertices = graph.getNumberOfVertices();
 
 
         int[] distance = new int[numberOfVertices];
         Integer[] prev = new Integer[numberOfVertices];
-        Queue<Integer[]> pqueue = new PriorityQueue<>(numberOfVertices, (e1, e2) -> e1[1].compareTo(e2[1]));
+        Queue<Integer[]> queue = new PriorityQueue<>(numberOfVertices, Comparator.comparing(e -> e[1]));
 
         // initialize all distances with infinity = Integer.Max_Value
         Arrays.fill(distance, Integer.MAX_VALUE);
@@ -42,29 +28,33 @@ public class DijkstraAdjacencyMatrixPQ {
         // set start Vertex distance to 0, bc we start from this vertex so
         distance[startVertex] = 0;
 
-        pqueue.add(new Integer[]{startVertex, 0});
+        queue.add(new Integer[]{startVertex, 0});
 
-        while (!pqueue.isEmpty()) {
+        while (!queue.isEmpty()) {
 
-            int vertex = pqueue.poll()[0];
+            int vertex = queue.poll()[0];
 
-            for (int v : graph.neighbours(vertex)) {
+            for (Graph<Integer>.Edge e : graph.getGraph().get(vertex)) {
 
-                int newDistance = distance[vertex] + graph.getGraph()[vertex][v];
+                int v = e.getDestination();
 
+                int newDistance = distance[vertex] + e.getWeight();
+
+                // compare distances
                 if (newDistance < distance[v]) {
                     distance[v] = newDistance;
                     prev[v] = vertex;
-                    pqueue.add(new Integer[]{v, distance[v]});
+                    // Add the current vertex to the PriorityQueue
+                    queue.add(new Integer[]{v, distance[v]});
                 }
             }
         }
-
         System.out.println(Arrays.toString(prev));
         printShortestPath(startVertex, distance);
     }
 
     private void printShortestPath(int startVertex, int[] distance) {
+
         for (int i = 0; i < distance.length; i++) {
             System.out.println("Source Vertex: " + startVertex + " to vertex " + i +
                     " distance: " + distance[i]);
@@ -73,9 +63,18 @@ public class DijkstraAdjacencyMatrixPQ {
 
     public static void main(String[] args) {
 
-        DijkstraAdjacencyMatrixPQ dikstra = new DijkstraAdjacencyMatrixPQ();
+        DijkstraAdjacencyListPQ dikstra = new DijkstraAdjacencyListPQ();
 
-        AdjacencyMatrix graph = new AdjacencyMatrix(8);
+        Graph<Integer> graph = new Graph<>(true);
+
+        graph.addVertex(0);
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addVertex(5);
+        graph.addVertex(6);
+        graph.addVertex(7);
 
         graph.addEdge(0, 1, 2);
         graph.addEdge(0, 2, 10);
@@ -93,10 +92,13 @@ public class DijkstraAdjacencyMatrixPQ {
         graph.addEdge(5, 7, 4);
         graph.addEdge(6, 7, 8);
 
+
         graph.print();
 
         System.out.println();
 
         dikstra.dijkstra(graph, 0);
+
+
     }
 }
