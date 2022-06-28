@@ -33,7 +33,6 @@ public class DijkstraAdjacencyMatrixPQ {
         int[] distance = new int[numberOfVertices];
         Integer[] prev = new Integer[numberOfVertices];
         Queue<Integer[]> pqueue = new PriorityQueue<>(graph.getGraph().length, (e1, e2) -> e1[1].compareTo(e2[1]));
-        Set<Integer> settled = new HashSet<>();
 
         // initialize all distances with infinity = Integer.Max_Value
         Arrays.fill(distance, Integer.MAX_VALUE);
@@ -47,18 +46,9 @@ public class DijkstraAdjacencyMatrixPQ {
 
             int vertex = pqueue.poll()[0];
 
-            if (settled.contains(vertex))
-                continue;
-
-            settled.add(vertex);
-
             for (int v : graph.neighbours(vertex)) {
 
-                if (settled.contains(v))
-                    continue;
-
                 int newDistance = distance[vertex] + graph.getGraph()[vertex][v];
-
 
                 if (newDistance < distance[v]) {
                     distance[v] = newDistance;
