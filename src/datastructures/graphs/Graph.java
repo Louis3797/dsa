@@ -119,10 +119,12 @@ public class Graph<T extends Comparable<T>> {
         // If graph does not contain vertices, throw an error
         if (!this.graph.containsKey(source)) {
             this.graph.put(source, new LinkedList<>());
+            this.numberOfVertices++;
         }
 
         if (!this.graph.containsKey(destination)) {
             this.graph.put(destination, new LinkedList<>());
+            this.numberOfVertices++;
         }
 
 

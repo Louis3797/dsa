@@ -29,7 +29,7 @@ public class DijkstraAdjacencyMatrixPQ {
     public void dijkstra(AdjacencyMatrix graph, int startVertex) {
 
         // store the number of vetices in Graph
-        int numberOfVertices = graph.getGraph().length;
+        int numberOfVertices = graph.size();
 
 
         int[] distance = new int[numberOfVertices];
