@@ -117,8 +117,13 @@ public class Graph<T extends Comparable<T>> {
     public void addEdge(T source, T destination, int weight) {
 
         // If graph does not contain vertices, throw an error
-        if (!this.graph.containsKey(source) || !this.graph.containsKey(destination))
-            throw new IllegalArgumentException("Either one or both of the specified nodes are not present in the graph");
+        if (!this.graph.containsKey(source)) {
+            this.graph.put(source, new LinkedList<>());
+        }
+
+        if (!this.graph.containsKey(destination)) {
+            this.graph.put(destination, new LinkedList<>());
+        }
 
 
         if (adjacency(source, destination))
