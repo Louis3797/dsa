@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static <T extends Comparable<T>> void sort(T[] array) {
-
+        throw new UnsupportedOperationException();
     }
 
 
