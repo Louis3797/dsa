@@ -5,7 +5,40 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static <T extends Comparable<T>> void sort(T[] array) {
-        throw new UnsupportedOperationException();
+        quicksort(array, 0, array.length - 1);
+    }
+
+    private static <T extends Comparable<T>> void quicksort(T[] array, int left, int right) {
+
+        if (left < right) {
+            T pivot = array[(left + right) / 2];
+            int index = partition(array, left, right, pivot);
+            quicksort(array, left, index - 1);
+            quicksort(array, index, right);
+        }
+    }
+
+    private static <T extends Comparable<T>> int partition(T[] array, int left, int right, T pivot) {
+
+        while (left <= right) {
+
+            while (array[left].compareTo(pivot) < 0)
+                left++;
+
+
+            while (array[right].compareTo(pivot) > 0)
+                right--;
+
+            if (left <= right) {
+                T temp = array[left];
+                array[left] = array[right];
+                array[right] = temp;
+                left++;
+                right--;
+            }
+        }
+
+        return left;
     }
 
 
