@@ -1,4 +1,4 @@
-package datastructures.linkedList;
+package datastructures.lists;
 
 public class LinkedList<T extends Comparable<T>> {
 
